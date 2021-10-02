@@ -98,11 +98,9 @@ closedir(dCategory);
 			dTxt = opendir(search->categoryLink);
 			if (dTxt){
 				while ((dir2 = readdir(dTxt)) != NULL){
-					
 				if((strcmp(dir2->d_name,".")==0 || strcmp(dir2->d_name,"..")==0 || (*dir2->d_name) == '.' )){
 				}
            	    		else{
-           	
 				int len = strlen(dir2->d_name);
 				//If the file is txt file
 			 	if(len > 4 && strcmp(dir2->d_name+ len - 4, ".txt")==0){
@@ -235,16 +233,14 @@ void add(struct master **header,char *oneterm,char* documentPath ,char *category
 void firstOrder(struct master* list){
     struct master *tempList =list;
     struct master *traverse=list;
-    
    
     printf(" \n*1st-order term co-occurance* \n");
     while(tempList->masternext!=NULL){
-    	
     		if(strcmp(tempList->document,tempList->masternext->document)==0){
     		printf("{%s,%s}",tempList->term,tempList->masternext->term);	
-			}
-    	
-	tempList=tempList->masternext;}
+		}
+	tempList=tempList->masternext;
+    }
 	
 }
 //This function finds the repetitive word.
@@ -270,7 +266,7 @@ void repetitiveWords(struct master* list){
 //This function makes a insert for second order.
 void secondOrderInsert(struct master** header,char* term,char* term2){
 	
-	struct master *termNode = malloc(sizeof(struct master));
+    struct master *termNode = malloc(sizeof(struct master));
     strcpy(termNode->term,term);
     strcpy(termNode->term2,term2);
     termNode->masternext= NULL;
@@ -344,7 +340,6 @@ void printSecondorThirdOrder(struct master* list,int number){
 	struct master* tempList=list;
 	struct master* traverse=list;
 	
-	
 	printf("\n\n* %dnd-order term co-occurance*\n",number);
 	while(tempList!=NULL){
 		traverse=tempList->masternext;
@@ -367,8 +362,7 @@ void printSecondorThirdOrder(struct master* list,int number){
 	
 	while(tempList!=NULL){
 		if(strcmp(tempList->term,"")!=0){
-		printf("{%s,%s}",tempList->term,tempList->term2);	
-
+		printf("{%s,%s}",tempList->term,tempList->term2);
 		}	
 		tempList=tempList->masternext;
 	}
@@ -430,21 +424,19 @@ void frequencyForCategory(struct master* list){
 		tempListFrequency=list;
 		while(tempListFrequency!=NULL){
 		if(strcmp(tempList->term,tempListFrequency->term)==0){
-			
 			if(strcmp(tempList->categoryName,tempListFrequency->categoryName)==0){
 				tempList->categoryFrequency=tempList->categoryFrequency+1;
-				
 			}
 		}
 		tempListFrequency=tempListFrequency->masternext;
 		}
-	tempList=tempList->masternext
-	;}
+	tempList=tempList->masternext;
+	}
 
 }
 //Sorts the terms' frequency for each category
 void sortCategoryFrequency(struct master **sortList){
-	struct master *termNode =sortList;
+    struct master *termNode =sortList;
     struct master *search,*max;
     while(termNode!=NULL){
     	max=termNode;
@@ -454,16 +446,14 @@ void sortCategoryFrequency(struct master **sortList){
     			max=search;
 			}
 			search=search->masternext;
-    		
 		}
 		swap(termNode,max);
 		termNode=termNode->masternext;
 	}
-
 }
 //Sorts the terms with their documents.
 void sortAlphabetforDocument(struct master* list){
-	struct master *termNode =list;
+    struct master *termNode =list;
     struct master *search,*presedence;
     while(termNode!=NULL){
     	presedence=termNode;
@@ -514,7 +504,7 @@ void swap(struct master* p1,struct master* p2){
 }
 //After the category frequency is defined,sorts the terms for alphabet.
 void sortAlphabetforFrequency(struct master* list){
-	struct master *termNode =list;
+    struct master *termNode =list;
     struct master *search,*presedence;
     while(termNode!=NULL){
     	presedence=termNode;
@@ -524,9 +514,8 @@ void sortAlphabetforFrequency(struct master* list){
     			if(strcmp(presedence->term,search->term)==1){
     			presedence=search;
 			}	
-			}    		
+		}    		
 			search=search->masternext;
-    		
 		}
 		swap(termNode,presedence);
 		termNode=termNode->masternext;
@@ -548,10 +537,7 @@ void  getRidOf(struct master* list){
         			traverse->categoryFrequency=0;
         			strcpy(traverse->term,"");
 				}
-				else{
-					
-				}
-        			
+				
 				}
 				traverse=traverse->masternext;
 			}
@@ -565,9 +551,7 @@ int deleteEnd(struct master* list){
 	struct master* tempList=list;
 	
 	while(tempList->masternext->masternext!=NULL){
-		
 		tempList=tempList->masternext;
-		
 	}
 	if(tempList->masternext->categoryFrequency==0){
 		free(tempList->masternext);
@@ -624,16 +608,10 @@ void idf(struct master* list,struct category* list2){
 				n=tempList->txtFrequency;
 				IDF=log(N/n)*(tempList->categoryFrequency);
 				tempList->IDF=IDF;	
-					
 				}
-
 				tempList=tempList->masternext;
 				}
-			
 			categoryList=categoryList->cnext;
-			
-			
-			
 		}
 
 	
@@ -645,7 +623,7 @@ void sortIDF(struct master* list){
    	int i=10;
     
     while(termNode!=NULL){		
-		max=termNode;
+	max=termNode;
     	search=termNode->masternext;
     	while(search !=NULL){
     		
@@ -653,11 +631,10 @@ void sortIDF(struct master* list){
     			if(max->IDF<search->IDF){
     			max=search;
 			}	
-			}
+		}
     		
 			search=search->masternext;	
-    
-    		
+
 		}
 		swap(termNode,max);
 		termNode=termNode->masternext;
@@ -674,17 +651,13 @@ void printCategory(struct master* list,struct category* list2){
 		
 		
 		printf("\n****Category is %s ****",categoryList->categoryName);
-		
 		while(tempList!=NULL){
-			
 			if(i<5){
-				
 				if(strcmp(categoryList->categoryName,tempList->categoryName)==0){
-					
 					add(&top30,tempList->term,tempList->document,tempList->categoryName,tempList->categoryFrequency,
 					tempList->txtFrequency,tempList->IDF);
-				printf("\n%d) %s ; %d",i+1,tempList->term,tempList->categoryFrequency);
-				i++;
+					printf("\n%d) %s ; %d",i+1,tempList->term,tempList->categoryFrequency);
+					i++;
 				}	
 			}
 		tempList=tempList->masternext;
@@ -708,7 +681,6 @@ void printftfIdf(struct master* list,struct category*  list2){
 			
 			if(i<5){
 				if(strcmp(categoryList->categoryName,tempList->categoryName)==0){
-	
 				printf("\n%d) %s ; %.2f",i+1,tempList->term,tempList->IDF);
 				i++;
 				}	
